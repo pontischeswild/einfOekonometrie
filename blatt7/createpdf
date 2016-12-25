@@ -1,0 +1,17 @@
+#!/bin/bash
+
+rm *.bbl
+rm *.blg
+rm *.aux
+rm *.log
+rm *.dvi
+rm *.ps
+rm *.pdf
+
+latex $1
+bibtex $1
+latex $1
+latex $1
+dvips $1
+ps2pdf $1.ps
+evince $1.pdf &
