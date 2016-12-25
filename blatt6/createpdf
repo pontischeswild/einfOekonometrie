@@ -9,9 +9,9 @@ rm *.ps
 rm *.pdf
 
 latex Blatt6
-bibtex Blatt6
-latex Blatt6
-latex Blatt6
-dvips Blatt6
-ps2pdf Blatt6.ps
-evince Blatt6.pdf
+bibtex $1
+latex $1
+latex $1
+dvips $1
+ps2pdf $1.ps
+evince $1.pdf &
