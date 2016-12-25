@@ -1,0 +1,852 @@
+\documentclass[a4paper,11pt]{article}
+\input{preamble_article}%
+
+%----------------------------------------------------------------------------
+%----------------------------------------------------------------------------
+%----------------------------------------------------------------------------
+
+\usepackage[natbib=true,style=alphabetic,backend=bibtex]{biblatex}
+\addbibresource{refs.bib}
+
+\usepackage{versions}
+
+%\includeversion{solution}
+\excludeversion{solution}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+
+
+\lfoot{\footnotesize \sf   Einführung in die Ökonometrie, Wintersemester 16/17}
+%\cfoot{\footnotesize \sf \thepage}
+%\cfoot{\footnotesize \sf Blatt 5}
+\cfoot{}
+\rfoot{\footnotesize \sf \thepage}
+
+
+\renewcommand{\headrulewidth}{0pt}
+\newcommand\HRule{\noindent\rule{\linewidth}{2pt}}
+\newcommand\HRuleTwo{\noindent\rule{\linewidth}{1pt}}
+
+\newtheoremstyle{ex}
+{\topsep}{\topsep} % Abstand nach oben und unten
+{\normalfont} % Textlayout
+{0pt}% Überschrift Einzug
+{\sffamily \bfseries}{} % Font und Satzzeichen danach
+{\newline} % Abstand nach Überschrift
+{} % Überschriftenspezifikation
+
+\definecolor{refcol}{rgb}{0,0,.66}
+%\usepackage[colorlinks=true,linkcolor=refcol, pagecolor=black, citecolor=refcol, filecolor=black, urlcolor=refcol, menucolor=black]{hyperref}
+\usepackage[colorlinks=true,linkcolor=black, pagecolor=black, citecolor=black, filecolor=black, urlcolor=black, menucolor=black]{hyperref}
+
+\theoremstyle{ex}
+\newtheorem{Exercise}{Aufgabe}
+
+\begin{document}
+
+\noindent \HRule \\ 
+\noindent {\sf \textbf{Einführung in die Ökonometrie}} \hfill {\sf \textbf{Wintersemester 16/17} } \\ 
+{\sf \textbf{Elizabeth Heller}} \hfill {\sf \textbf{Blatt 6} } \\
+{\sf \textbf{L\"{o}sungsvorschl\"{a}ge: Serkan Yener}} \\
+\noindent \HRule
+
+
+\rmfamily
+
+\parindent 0mm
+
+\begin{itemize}
+
+\item[(a)] Erläutern Sie, wieso sich das sog. \textit{Tukey-Anscombe Diagramm}
+           \begin{center}
+           \setlength{\unitlength}{1cm}
+           \begin{picture}(4,2.5)
+           \thicklines
+           \put(0,1){\vector(1,0){4}}
+           \put(4,1.25){$\hat{y}_n$}
+           \put(0.5,0){\vector(0,1){2.5}}
+           \put(0.75,2.25){$\hat{u}_n$}
+           \end{picture}
+           \end{center}
+           zur graphischen Modelldiagnose eignet! Auf welcher Eigenschaft von $\hat{y}_n$
+           und $\hat{u}_n$ basiert die Analysefähigkeit des Tukey-Anscombe Diagramms?
+
+           \underline{\bf Lösungsvorschlag:} Wie wir bereits in Aufgabenblatt 1 und 5
+           gesehen haben, spielen die statistischen Eigenschaften der Störgröße $\bm{u}$
+           eine bedeutsame Rolle bei der Entscheidung, ob und wie gut die gewählte
+           Spezifikation die Annahmen des klassischen, linearen Regressionsmodells erfüllt.
+           Obwohl die Modellspezifikation $\bm{X}\bm{\beta}$ durch den Ökonometriker
+           vorgegeben und damit bekannt ist, bleiben die statistischen Eigenschaften der
+           Störgröße $\bm{u}$ unbeobachtbar. Die Analyse der statistischen Eigenschaften
+           von $\bm{u}$ ist allerdings unabdingbar, da sich nur hieraus die Güte der
+           Spezifikation
+           $\bm{X}\bm{\beta}$ und die Wahl der Schätzmethodik beurteilen lassen. Als eine
+           praktikable und gangbare Approximation gilt es, die Störgröße $u_n$ durch das
+           Residuum $\hat{u}_n$ zu ersetzen. Viele statistische Testverfahren machen sich
+           diese Approximation zunutze. Um die statistischen Eigenschaften von $\bm{\hat{u}}$
+           graphisch zu visualisieren, benötigt man eine Bezugsgröße. Im Tukey-Anscombe
+           Diagramm werden die aus der KQ-Schätzung resultierenden Residuen $\hat{u}_n$
+           auf der Ordinate und die aus der KQ-Schätzung resultierenden Projektionen
+           $\hat{y}_n$ auf der Abszisse abgetragen. Alternativ könnte man auch $\hat{u}_n$
+           gegen einen beliebigen Regressor plotten. Dies läßt sich, wie folgt, begründen:
+           Sind die Annahme der Linearität und die Annahme eines vollen Spaltenrangs von
+           $\bm{X}$ richtig, dann gelten die Orthogonalitätsbedingungen der KQ-Schätzung
+           $\bm{X}'\bm{\hat{u}}=\bm{0}_{k\times1}$. Hieraus folgt direkt
+           \[
+           \bm{\hat{u}}'\bm{\hat{y}}=(\bm{\hat{u}}'\bm{\hat{y}})'
+           =\bm{\hat{y}}'\bm{\hat{u}}=(\bm{X}\bm{\hat{\beta}}_{KQ})'\bm{\hat{u}}
+           =\bm{\hat{\beta}}_{KQ}'\bm{X}'\bm{\hat{u}}=0 \; ,
+           \]
+           d.h. es liegt kein lineare Zusammenhang zwischen Residuen und Projektion
+           vor. Trotz  $\Cov{\hat{u}_n,\hat{y}_n}=0$ ist jedoch Heteroskedastizität der
+           Form $\Var{\hat{u}_n}=f(\hat{y}_n)\not=\sigma^2=\text{const}$ möglich.
+           Gelten stattdessen jedoch die Annahmen des klassischen, linearen
+           Regressionsmodells, $\E{\bm{u}}=\bm{0}_{N\times1}$ und
+           $\E{\bm{u}\bm{u}'}=\sigma^2\bm{I}_N$, dann hat das Tukey-Anscombe Diagramm
+           das idealtypisches Aussehen aus Abbildung~\ref{fig:Homoskedastic Disturbances},
+           bei dem weder das erste noch das zweite Moment von $\hat{u}_n$ von $\hat{y}_n$
+           abhängen.
+
+           \begin{figure}[h!]
+           \centering
+           \parbox{12cm}{
+              \caption[]
+              {Tukey-Anscombe Diagramm für eine KQ-Schätzung mit Störgrößenvarianz
+              $\Var{u_n}=\sigma_n^2=\sigma^2$.}
+              \figtext{}\vspace*{0.25cm}
+              \includegraphics[width=12cm,height=9cm]{ex6fig1}
+              \label{fig:Homoskedastic Disturbances}
+           }
+           \end{figure}
+
+
+\item[(b)] Für eine Stichprobe aus Querschnittsdaten wird die Regressionsgleichung
+           \[
+           y_n=\beta_1+\beta_2x_{n2}+\beta_3x_{n3}+u_n
+           \]
+           mit $n=1,\ldots,76$ geschätzt. Werden die aus der KQ-Schätzung resultierenden
+           Residuen $\hat{u}_n$ gegen die entsprechenden Werte des dritten Regressors
+           $x_{n3}$ abgetragen, erhält man Abbildung~\ref{fig:Goldfeld-Quandt Disturbances}.
+
+           \begin{figure}[h!]%
+           \centering%
+           \parbox{12cm}{%
+              \caption[]%
+              {Tukey-Anscombe Diagramm.}%
+              \figtext{}\vspace*{0.25cm}%
+              \includegraphics[width=12cm,height=9cm]%
+                 {ex6fig2}%
+              \label{fig:Goldfeld-Quandt Disturbances}%
+           }%
+           \end{figure}%
+
+           Welche Eigenschaft der vorliegenden Stichprobe vermuten Sie? Beschreiben Sie ein
+           geeignetes Verfahren, um Ihre Vermutung zu testen!
+
+           \underline{\bf Lösungsvorschlag:} Aufgrund des in Teilaufgabe (a) beschriebenen
+           Zusammenhangs zwischen $\bm{\hat{u}}$ und $\bm{x}_3$ läßt sich vermuten, dass
+           die Annahme homoskedastischer Störgrößen $\bm{u}$ verletzt ist. Offensichtlich
+           lassen sich die Beobachtungen der Querschnittsdaten in zwei Gruppen mit
+           unterschiedlicher Störgrößenvarianz unterteilen. Die Variable $\bm{x}_3$ scheint
+           dabei als die sog. \textit{Threshold-Variable} zu fungieren. Der Test von
+           Goldfeld und Quandt (1965) ist für solche Situationen konzipiert. Er lässt
+           sich für das vorliegende Problem wie folgt durchführen:
+
+           1) Aufgrund des Diagramms lassen sich alle Beobachtungen des Datensatzes mittels
+           der Ausprägung der Variablen $\bm{x}_3$ in eine der beiden Gruppen mit $\sigma^2_1$
+           oder $\sigma^2_2$ einordnen, wobei $\sigma^2_1<\sigma^2_2$ gelten soll. Jede
+           Beobachtung des Querschnittsdatensatzes besteht aus dem Tripel $(y_n,x_{n2},x_{n3})$,
+           so dass bei der Sortierung nach $x_{n3}$ automatisch auch $y_n$ und $x_{n2}$
+           umsortiert werden. Nach der Sortierung erhält man zwei Teilstichproben. Die erste
+           Teilstichprobe ist charakterisiert durch $\sigma^2_1$ und subsumiert $N_1$
+           Beobachtungspunkte in $\bm{y}_1$ und $\bm{X}_1$. Die zweite Teilstichprobe ist
+           charakterisiert durch $\sigma^2_2$ und subsumiert $N_2$ Beobachtungspunkte
+           (mit $N=N_1+N_2$) in $\bm{y}_2$ und $\bm{X}_2$.
+
+           2) Man schätzt die Modelle $\bm{y}_1=\bm{X}_1\bm{\beta}_1+\bm{u}_1$ für die erste
+           Teilstichprobe und $\bm{y}_2=\bm{X}_2\bm{\beta}_2+\bm{u}_2$ für die zweite
+           Teilstichprobe. Danach berechnet man die entsprechenden Summen der quadrierten
+           Residuen $\bm{\hat{u}}_1'\bm{\hat{u}}_1$ und $\bm{\hat{u}}_2'\bm{\hat{u}}_2$.
+
+           3) Der Test lautet dann
+           \[
+           \text{H}_0:\sigma^2_1=\sigma^2_2
+           \qquad\text{vs.}\qquad
+           \text{H}_1:\sigma^2_1<\sigma^2_2 \; .
+           \]
+           Ein geeigneter Ausgangspunkt für eine diesbezügliche Teststatistik ist der Quotient
+           $\sigma^2_2/\sigma^2_1$, welcher bei Homoskedastizität gleich 1 sein sollte.
+           Ersetzt man $\sigma^2_1$ und $\sigma^2_2$ durch erwartungstreue Schätzer erhält man
+           die Teststatitik
+           \[
+           F:=\frac{\hat{\sigma}^2_2}{\hat{\sigma}^2_1}=
+           \frac{\bm{\hat{u}}_2'\bm{\hat{u}}_2/(N_2-k)}{\bm{\hat{u}}_1'\bm{\hat{u}}_1/(N_1-k)}
+           =\frac{\bm{\hat{u}}_2'\bm{\hat{u}}_2}{\bm{\hat{u}}_1'\bm{\hat{u}}_1}\,\frac{N_1-k}{N_2-k}
+           \; .
+           \]
+           Wie bereits in Aufgabenblatt~2 gesehen, sind Teststatistiken, die auf einen Vergleich
+           zwischen zwei Summen quadrierter Residuen abzielen, $F$-verteilt. Demnach ist $F$ unter
+           $\text{H}_0$ $F$-verteilt mit $N_2-k$ Zählerfreitheitsgraden und $N_1-k$
+           Nennerfreitheitsgraden.
+
+           4) $\text{H}_0$ wird zum Signifikanzniveau $\alpha$ abgelehnt, wenn $F>F_{krit}$,
+           wobei der kritische Wert $F_{krit}$ definiert ist als $F^{-1}_{N_2-k;N_1-k}(1-\alpha)$.
+
+
+\item[(c)] Führen Sie den unter Teilaufgabe (b) beschriebenen Test zum Signifikanzniveau 5\% mit
+           $\bm{\hat{u}}_1'\bm{\hat{u}}_1=0.0102$ für $n=1,\ldots,33$ und $\bm{\hat{u}}_2'\bm{\hat{u}}_2
+           =0.0428$ für $n=34,\ldots,76$ durch! Kann diese Testprozedur verbessert werden?
+
+           \underline{\bf Lösungsvorschlag:}\\
+           \underline{Hypothese:}
+           \[
+           \text{H}_0:\sigma^2_1=\sigma^2_2
+           \qquad\text{vs.}\qquad
+           \text{H}_1:\sigma^2_1<\sigma^2_2 \; .
+           \]
+           \underline{Teststatistik:}
+           \[
+           F=\frac{\bm{\hat{u}}_2'\bm{\hat{u}}_2}{\bm{\hat{u}}_1'\bm{\hat{u}}_1}\,\frac{N_1-k}{N_2-k}
+            =\frac{0.0428}{0.0102}\,\frac{33-3}{43-3}=3.1471
+           \; .
+           \]
+           \underline{Kritischer Wert:}
+           \[
+           F_{krit}=F^{-1}_{40;30}(0.95)=1.792
+           \; .
+           \]
+           \underline{Testentscheidung:} $\text{H}_0$ wird abgelehnt, da
+           $F_{krit}=1.792<3.1471=F$, d.h. es liegen keine homoskedastischen Störgrößen vor.
+
+           Die Trennschärfe des Goldfeld-Quandt Tests kann erhöht werden, wenn Beobachtungen eliminiert
+           werden, die das Vorliegen unterschiedlicher Varianzen kaschieren. Eine Faustregel schlägt
+           vor, das mittlere Drittel der sortierten Beobachtungen zu eliminieren. Jedoch trägt dieses
+           Drittel im vorliegenden Datensatz sowohl zur Bestimmung von $\hat{\sigma}^2_1$ als auch
+           zur Bestimmung von $\hat{\sigma}^2_2$ und somit auch zur Kontrastierung der beiden
+           Teilstichprobenvarianzen bei. Damit wäre dieser Schritt wohl mit einem Verlust an
+           Information und Schätzpräzision verbunden. Diese Faustregel sollte demnach flexibel und der
+           Situation entsprechend angewendet werden.
+        
+
+\item[(d)] Zeigen Sie, dass bei Vorliegen heteroskedastischer Störgrößen
+           \[
+           (\bm{y}-\bm{X}\bm{\beta})'\bm{\Sigma}^{-1}(\bm{y}-\bm{X}\bm{\beta})=\sum^N_{n=1}
+           \left(\frac{u_n}{\sigma_n}\right)^2
+           \qquad\text{mit}\quad
+           \bm{\Sigma}\equiv\E{\bm{u}\bm{u}'}=\sigma^2\bm{\Omega}
+           \]
+           gilt! Welche Interpretation lässt diese Beziehung zu?
+
+           \underline{\bf Lösungsvorschlag:} Zunächst führt man die Störgrößen auf der linken Seite
+           der Gleichung ein,
+           \[
+           (\bm{y}-\bm{X}\bm{\beta})'\bm{\Sigma}^{-1}(\bm{y}-\bm{X}\bm{\beta})=\bm{u}'
+           \bm{\Sigma}^{-1}\bm{u} \; ,
+           \]
+           um $u_n$ überhaupt ins Spiel zu bringen. Letztlich muss man nur noch die Elemente dieses
+           Vektor-Matrix-Produkts betrachten und berechnen:
+           \begin{align*}
+           \bm{u}'\bm{\Sigma}^{-1}\bm{u} &=
+           \left(\begin{array}{cccc}
+           u_1 & u_2 & \cdots & u_N
+           \end{array}\right)
+           \left[\begin{array}{cccc}
+           \sigma^2_1 &  &  & 0\\
+           & \sigma^2_2 & & \\
+           & & \ddots &\\
+           0 & & & \sigma^2_N
+           \end{array}\right]^{-1}
+           \left(\begin{array}{c}u_1\\
+           u_2\\
+           \vdots\\
+           u_N
+           \end{array}\right)\\ &=
+           \left(\begin{array}{cccc}
+           u_1 & u_2 & \cdots & u_N
+           \end{array}\right)
+           \left[\begin{array}{cccc}
+           \frac{1}{\sigma^2_1} &  &  & 0\\
+           & \frac{1}{\sigma^2_2} & & \\
+           & & \ddots &\\
+           0 & & & \frac{1}{\sigma^2_N}
+           \end{array}\right]
+           \left(\begin{array}{c}
+           u_1\\
+           u_2\\
+           \vdots\\
+           u_N
+           \end{array}\right)\\ &=
+           \left(\begin{array}{cccc}
+           \frac{u_1}{\sigma^2_1} & \frac{u_2}{\sigma^2_2} & \cdots & \frac{u_N}{\sigma^2_N}
+           \end{array}\right)
+           \left(\begin{array}{c}
+           u_1\\
+           u_2\\
+           \vdots\\
+           u_N
+           \end{array}\right)\\ &= \frac{u_1^2}{\sigma^2_1}+\frac{u_2^2}{\sigma^2_2}+\cdots+\frac{u_N^2}{\sigma^2_N}
+           =\sum^N_{n=1}\left(\frac{u_n}{\sigma_n}\right)^2 \; .
+           \end{align*}
+           Da
+           \[
+           (\bm{y}-\bm{X}\bm{\beta})'(\bm{y}-\bm{X}\bm{\beta})=\bm{u}'\bm{u}=\sum^N_{n=1}u_n^2
+           \]
+           der Summe der quadrierten Störgrößen entspricht und die Zielfunktion des KQ-Schätzers
+           in der klassischen linearen Regression ist, kann somit die Zielfunktion des
+           VKQ-Schätzers im Fall von heteroskedastischen Störgrößen
+           \begin{align*}
+           \bm{u}^{*'}\bm{u}^* &= (\bm{P}\bm{u})'(\bm{P}\bm{u})=
+           \bm{u}'\bm{P}'\bm{P}\bm{u}=\bm{u}'\bm{\Sigma}^{-1}\bm{u}\\ &=
+           (\bm{y}-\bm{X}\bm{\beta})'\bm{\Sigma}^{-1}(\bm{y}-\bm{X}\bm{\beta})=
+           \sum^N_{n=1}\left(\frac{u_n}{\sigma_n}\right)^2
+           \end{align*}
+           als gewichtete Summe der quadrierten Störgrößen aufgefasst werden.
+             
+
+\item[(e)] Zeigen Sie, dass bei Vorliegen heteroskedastischer Störgrößen
+           \[
+           (\bm{X}'\bm{\Sigma}^{-1}\bm{X})^{-1}\bm{X}'\bm{\Sigma}^{-1}\bm{y}=\left(\sum^N_{n=1}
+           \sigma_n^{-2}\bm{x}_n\bm{x}_n'\right)^{-1}\sum^N_{n=1}\sigma_n^{-2}\bm{x}_ny_n
+           \qquad\text{mit}\quad
+           \bm{\Sigma}\equiv\E{\bm{u}\bm{u}'}
+           \]
+           gilt! Welche Interpretation lässt diese Beziehung zu?
+
+           \underline{\bf Lösungsvorschlag:} Um diese Beziehung zu beweisen, geht man am
+           besten in zwei Schritten vor. Als Erstes zeigt man
+           \[
+           (\bm{X}'\bm{\Sigma}^{-1}\bm{X})^{-1}=\left(\sum^N_{n=1}\sigma_n^{-2}\bm{x}_n\bm{x}_n'
+           \right)^{-1} \; .
+           \]
+           Offensichtlich benötigt man eine geeignete Zerlegung der Regressormatrix $\bm{X}$
+           durch den Vektor $\bm{x}_n$. Dabei hilft es, sich über die Dimension der folgenden
+           Objekte Klarheit zu verschaffen:
+           \[
+           \underbrace{\bm{x}_n}_{k\times1}=
+           \left(\begin{array}{c}
+           1\\
+           x_{n2}\\
+           \vdots\\
+           x_{nk}
+           \end{array}\right)
+           \qquad
+           \underbrace{\bm{X}}_{N\times k}=
+           \left[\begin{array}{c}
+           \bm{x}_1'\\
+           \bm{x}_2'\\
+           \vdots\\
+           \bm{x}_N'
+           \end{array}\right]
+           \qquad
+           \underbrace{\bm{X}'}_{k\times N}=
+           \left[\begin{array}{cccc}
+           \bm{x}_1 & \bm{x}_2 & \cdots & \bm{x}_N
+           \end{array}\right] \; .
+           \]
+           Dann gilt
+           \begin{align*}
+           (\bm{X}'\bm{\Sigma}^{-1}\bm{X})^{-1} &= \left[\left[\begin{array}{cccc}
+           \bm{x}_1 & \bm{x}_2 & \cdots & \bm{x}_N
+           \end{array}\right]
+           \left[\begin{array}{cccc}
+           \sigma^2_1 &  &  & 0\\
+           & \sigma^2_2 & & \\
+           & & \ddots &\\
+           0 & & & \sigma^2_N
+           \end{array}\right]^{-1}
+           \left[\begin{array}{c}
+           \bm{x}_1'\\
+           \bm{x}_2'\\
+           \vdots\\
+           \bm{x}_N'
+           \end{array}\right]\right]^{-1}\\ &= \left[\left[\begin{array}{cccc}
+           \bm{x}_1 & \bm{x}_2 & \cdots & \bm{x}_N
+           \end{array}\right]
+           \left[\begin{array}{cccc}
+           \frac{1}{\sigma^2_1} &  &  & 0\\
+           & \frac{1}{\sigma^2_2} & & \\
+           & & \ddots &\\
+           0 & & & \frac{1}{\sigma^2_N}
+           \end{array}\right]
+           \left[\begin{array}{c}
+           \bm{x}_1'\\
+           \bm{x}_2'\\
+           \vdots\\
+           \bm{x}_N'
+           \end{array}\right]\right]^{-1}\\ &= \left[\left[\begin{array}{cccc}
+           \frac{\bm{x}_1}{\sigma^2_1} & \frac{\bm{x}_2}{\sigma^2_2} & \cdots & \frac{\bm{x}_N}{\sigma^2_N}
+           \end{array}\right]
+           \left[\begin{array}{c}
+           \bm{x}_1'\\
+           \bm{x}_2'\\
+           \vdots\\
+           \bm{x}_N'
+           \end{array}\right]\right]^{-1}\\ &= \left[\frac{\bm{x}_1\bm{x}_1'}{\sigma^2_1}+\frac{\bm{x}_2\bm{x}_2'}{\sigma^2_2}+\cdots
+           +\frac{\bm{x}_N\bm{x}_N'}{\sigma^2_N}\right]^{-1}
+           =\left[\sum^N_{n=1}\sigma_n^{-2}\bm{x}_n\bm{x}_n'\right]^{-1} \; .
+           \end{align*}
+           Zuletzt beweist man, dass
+           \[
+           \bm{X}'\bm{\Sigma}^{-1}\bm{y}=\sum^N_{n=1}\sigma_n^{-2}\bm{x}_ny_n \; .
+           \]
+           Es gilt
+           \begin{align*}
+           \bm{X}'\bm{\Sigma}^{-1}\bm{y} &=
+           \left[\begin{array}{cccc}
+           \bm{x}_1 & \bm{x}_2 & \cdots & \bm{x}_N
+           \end{array}\right]
+           \left[\begin{array}{cccc}
+           \sigma^2_1 &  &  & 0\\
+           & \sigma^2_2 & & \\
+           & & \ddots &\\
+           0 & & & \sigma^2_N
+           \end{array}\right]^{-1}
+           \left(\begin{array}{c}
+           y_1\\
+           y_2\\
+           \vdots\\
+           y_N
+           \end{array}\right)\\ &=
+           \left[\begin{array}{cccc}
+           \bm{x}_1 & \bm{x}_2 & \cdots & \bm{x}_N
+           \end{array}\right]
+           \left[\begin{array}{cccc}
+           \frac{1}{\sigma^2_1} &  &  & 0\\
+           & \frac{1}{\sigma^2_2} & & \\
+           & & \ddots &\\
+           0 & & & \frac{1}{\sigma^2_N}
+           \end{array}\right]
+           \left(\begin{array}{c}
+           y_1\\
+           y_2\\
+           \vdots\\
+           y_N
+           \end{array}
+           \right)\\ &= \left[\begin{array}{cccc}
+           \frac{\bm{x}_1}{\sigma^2_1} & \frac{\bm{x}_2}{\sigma^2_2} & \cdots & \frac{\bm{x}_N}{\sigma^2_N}
+           \end{array}\right]
+           \left(\begin{array}{c}
+           y_1\\
+           y_2\\
+           \vdots\\
+           y_N
+           \end{array}\right)\\ &=
+           \frac{\bm{x}_1y_1}{\sigma^2_1}+\frac{\bm{x}_2y_2}{\sigma^2_2}+\cdots
+           +\frac{\bm{x}_Ny_N}{\sigma^2_N}=\sum^N_{n=1}\sigma_n^{-2}\bm{x}_ny_n \; .
+           \end{align*}
+           Zusammengenommen lässt sich somit
+           \begin{align*}
+           \bm{\hat{\beta}}_{VKQ}=(\bm{X}'\bm{\Sigma}^{-1}\bm{X})^{-1}\bm{X}'\bm{\Sigma}^{-1}\bm{y}
+           &= \left(\sum^N_{n=1}\sigma_n^{-2}\bm{x}_n\bm{x}_n'\right)^{-1}\sum^N_{n=1}\sigma_n^{-2}\bm{x}_ny_n\\
+           &= \left(\sum^N_{n=1}\frac{\bm{x}_n}{\sigma_n}\frac{\bm{x}_n'}{\sigma_n}\right)^{-1}
+           \sum^N_{n=1}\frac{\bm{x}_n}{\sigma_n}\frac{y_n}{\sigma_n}
+           \end{align*}
+           als ein gewichteter KQ-Schätzer interpretieren.
+
+       
+\item[(f)] Für eine Stichprobe von Querschnittsdaten wird die Regressionsgleichung
+           \[
+           y_n=\beta_1+\beta_2x_{n2}+\beta_3x_{n3}+u_n
+           \qquad\text{mit}\quad n=1,\ldots,300
+           \]
+           geschätzt. Werden die aus der KQ-Schätzung resultierenden Residuen
+           $\hat{u}_n$ gegen die entsprechenden Werte der Projektion $\hat{y}_n$
+           abgetragen, erhält man Abbildung~\ref{fig:Multiplicative Heteroskedasticity}. Welche
+           Eigenschaft der vorliegenden Stichprobe vermuten Sie?
+
+           Beschreiben Sie ein möglichst allgemeines Verfahren, um Ihre
+           Vermutung zu testen!
+
+           \begin{figure}[h!]
+           \centering
+           \parbox{12cm}{
+              \caption[]
+              {Tukey-Anscombe Diagramm.}
+              \figtext{}\vspace*{0.25cm}
+              \includegraphics[width=12cm,height=9cm]{ex6fig3}
+              \label{fig:Multiplicative Heteroskedasticity}
+           }
+           \end{figure}
+
+           \underline{\bf Lösungsvorschlag:} Der Test von Breusch and Pagan (1979)
+           ist ein sehr flexibles Verfahren, um allgemeine Formen von Heteroskedastizität
+           zu testen. Sei z.B. das Regressionsmodell
+           \[
+           y_n=\bm{x}_n'\bm{\beta}+u_n
+           \qquad\text{für}\quad n=1,\ldots,N
+           \]
+           und $\bm{x}_n=(1\;x_{n2}\;\cdots\;x_{nk})'$ gegeben. Die Störgröße $u_n$
+           habe folgende Eigenschaften: $\E{u_n}=0$ und eine flexible Varianzfunktion
+           \[
+           \sigma^2_n:=\E{u^2_n}=h(\bm{z}_n'\bm{\alpha})
+           \; ,
+           \]
+           mit $\bm{z}_n=(1\;z_{n2}\;\cdots\;z_{np})'$ und $\bm{\alpha}=(\alpha_1\;
+           \alpha_2\;\cdots\;\alpha_p)'$. Die invariante Varianzfunktion $h(\cdot)$
+           kann viele Formen von Heteroskedastizität abbilden, aber auch Homoskedastizität
+           $\sigma^2_n=h(\alpha_1)$, für $\alpha_2=\cdots=\alpha_p=0$. Letzteres kann
+           als Nullhypothese für das Fehlen von Heteroskedastizität verwendet werden:
+           \[
+           \text{H}_0:\alpha_2=\cdots=\alpha_p=0
+           \qquad\text{vs.}\qquad
+           \text{H}_1:\exists\,j=2,\ldots,p:\;\alpha_j\not=0 \; .
+           \]
+           Als Testverfahren haben Breusch und Pagan folgende Schritte vorgeschlagen:
+
+           (1) Die KQ-Schätzung des linearen Modells $y_n=\bm{x}_n'\bm{\beta}+u_n$ und
+           die Berechnung von $\hat{u}_n$ und $\hat{\sigma}^2=\sum^N_{n=1}\hat{u}^2_n/N$.
+
+           (2) Die KQ-Schätzung der Hilfsregression
+           \[
+           v_n=\bm{z}_n'\bm{\alpha}+\epsilon_n
+           \qquad\text{mit}\quad
+           v_n=\frac{\hat{u}^2_n}{\hat{\sigma}^2}
+           \]
+           und Berechnung der erklärten Streuung
+           \[
+           SQE=\sum^N_{n=1}(\hat{v}_n-\bar{v})^2 \; .
+           \]
+
+           (3) Unter $\text{H}_0$ und der Annahme, dass $u_n$ normalverteilt ist, gilt
+           \[
+           \frac{1}{2}SQE\xrightarrow{d}\chi^2(p-1) \; .
+           \]
+
+           (4) $\text{H}_0$ wird zum Signifikanzniveau $\alpha$ abgelehnt, wenn
+           $\frac{1}{2}SQE>\chi^2_{krit}$, wobei der kritische Wert $\chi^2_{krit}$
+           definiert ist als das Quantil $F_{p-1}^{-1}(1-\alpha)$.
+
+           Eine asymptotisch äquivalente Teststatistik ist $N\cdot R^2$ ($\frac{1}{2}
+           SQE\stackrel{asy}{\sim}NR^2$), wobei $R^2$ das multiple Bestimmtheitsmaß
+           der Hilfsregression $v_n=\bm{z}_n'\bm{\alpha}+\epsilon_n$ ist. Diese
+           Teststatistik hat den Vorteil, dass sie auch dann gilt, wenn $u_n$ nicht
+           normalverteilt ist.
+					
+\item[(g)] Erläutern Sie, wie Sie den in Teilaufgabe (f) beschriebenen Test unter Berücksichtigung
+           der Information des Tukey-Anscombe Diagramms formulieren!
+
+           Führen Sie diesen Test
+           zum Signifikanzniveau von $\alpha=5\%$ und für ein $R^2$ der entsprechenden Hilfsregression von
+           0.0687 durch!
+
+           \underline{\bf Lösungsvorschlag:} Die Heteroskedastizität scheint im Tukey-Anscombe
+           Diagramm eine Funktion der Projektion $\hat{y}_n=\bm{x}_n'\bm{\hat{\beta}}_{KQ}$
+           zu sein. Daher sollte die Hilfsregression als
+           \[
+           v_n=\bm{x}_n'\bm{\alpha}+\epsilon_n \; ,
+           \]
+           mit $\bm{x}_n=(1\;x_{n2}\;x_{n3})'$ und $\bm{\alpha}=(\alpha_1\;\alpha_2\;\alpha_3)'$,
+           formuliert werden. Bei genaueren Informationen könnte man die Anzahl der
+           Regressoren in der Hilfsregression einschränken.\\
+           \underline{Hypothese:}
+           \[
+           \text{H}_0:\alpha_2=\alpha_3=0
+           \qquad\text{vs.}\qquad
+           \text{H}_1:\exists\,j=2,3:\;\alpha_j\not=0 \; .
+           \]
+           \underline{Teststatistik:}
+           \[
+           N\cdot R^2=300\cdot0.0687=20.61 \; .
+           \]
+           \underline{Kritischer Wert:}
+           \[
+           \chi^2_{krit}=F_{p-1}^{-1}(1-\alpha)=F_2^{-1}(0,95)=5.99 \; .
+           \]
+           \underline{Testentscheidung:} $\text{H}_0$ wird abgelehnt, da
+           $\chi^2_{krit}=5.99<20.61=N\cdot R^2$. d.h. es liegen keine
+           homoskedastischen Störgrößen vor.
+					
+\item[(h)] Die Schätzung des linearen Regressionsmodells aus Teilaufgabe (f) ergab
+           \[
+           \bm{\hat{\beta}}_{KQ}=(\bm{X}'\bm{X})^{-1}\bm{X}'\bm{y}=
+           \left(\begin{array}{r}
+           0.8891\\
+           1.2430\\
+           1.2545
+           \end{array}\right).
+           \]
+
+           Benutzen Sie die analytischen Ergebnisse aus Aufgabenblatt 5, um zu beurteilen, welche
+           Auswirkungen die Verwendung der Kovarianzmatrizen
+           \[
+           \bm{\hat{\Sigma}}_{\bm{\hat{\beta}}_{KQ}}=\hat{\sigma}^2_{KQ}(\bm{X}'\bm{X})^{-1}=
+           \left[\begin{array}{rrr}
+           0.0040 & -0.0021 & -0.0018\\
+           -0.0021 & 0.0025 & 0.0001\\
+           -0.0018 & 0.0001 & 0.0022
+           \end{array}\right]
+           \]
+           bzw.
+           \[
+           \bm{\Sigma}_{\bm{\hat{\beta}}_{KQ}}=(\bm{X}'\bm{X})^{-1}\bm{X}'\bm{\Sigma}
+           \bm{X}(\bm{X}'\bm{X})^{-1}=
+           \left[\begin{array}{rrr}
+           0.0038 & -0.0025 & -0.0019\\
+           -0.0025 & 0.0037 & 0.0001\\
+           -0.0019 & 0.0001 & 0.0023
+           \end{array}\right]
+           \]
+           haben werden, wobei angenommen wird, dass $\bm{\Sigma}:=\E{\bm{u}\bm{u}'}$ in $\bm{\Sigma}_{\bm{\hat{\beta}}_{KQ}}$ bekannt sei!
+
+           \underline{\bf Lösungsvorschlag:} $\bm{\hat{\Sigma}}_{\bm{\hat{\beta}}_{KQ}}$
+           ist die Kovarianzmatrix, die daraus resultiert, dass man fälschlicherweise
+           homoskedastische Störgrößen annimmt. Wie wir in Aufgabenblatt 5 gesehen haben,
+           ist $\hat{\sigma}^2_{KQ}$ ein verzerrter Schätzer für $\sigma^2$ und der
+           Matrixteil von $\bm{\hat{\Sigma}}_{\bm{\hat{\beta}}_{KQ}}$, $(\bm{X}'\bm{X})^{-1}$,
+           ist nur für homoskedastische Störgrößen korrekt. Damit ist
+           $\bm{\hat{\Sigma}}_{\bm{\hat{\beta}}_{KQ}}$ die falsche Kovarianzmatrix für
+           $\bm{\hat{\beta}}_{KQ}$. Bei Heteroskedastie ist $\bm{\Sigma}_{\bm{\hat{\beta}}_{KQ}}$
+           die richtige Kovarianzmatrix für $\bm{\hat{\beta}}_{KQ}$, falls $\bm{\Sigma}$
+           bekannt ist. Falls $\bm{\Sigma}$ unbekannt ist, muss $\bm{X}'\bm{\Sigma}\bm{X}$
+           durch den Kovarianzschätzer von White (1980) bestimmt werden. Die Quadratwurzel
+           der Hauptdiagonalenelemente gibt die Schätzfehler des KQ-Schätzers
+           $\bm{\hat{\beta}}_{KQ}$ an. Für $\bm{\hat{\Sigma}}_{\bm{\hat{\beta}}_{KQ}}$ folgt
+           hieraus
+           \begin{align*}
+           \hat{\sigma}_{\bm{\hat{\beta}}_{KQ,1}}
+           &= \sqrt{\Bigl(\bm{\hat{\Sigma}}_{\bm{\hat{\beta}}_{KQ}}\Bigr)_{11}}=\sqrt{0.0040}=0.0629\\
+           \hat{\sigma}_{\bm{\hat{\beta}}_{KQ,2}}
+           &= \sqrt{\Bigl(\bm{\hat{\Sigma}}_{\bm{\hat{\beta}}_{KQ}}\Bigr)_{22}}=\sqrt{0.0025}=0.0502\\
+           \hat{\sigma}_{\bm{\hat{\beta}}_{KQ,3}}
+           &= \sqrt{\Bigl(\bm{\hat{\Sigma}}_{\bm{\hat{\beta}}_{KQ}}\Bigr)_{33}}=\sqrt{0.0022}=0.0467 \; .
+           \end{align*}
+           Für $\bm{\Sigma}_{\bm{\hat{\beta}}_{KQ}}$ folgt
+           \begin{align*}
+           \sigma_{\bm{\hat{\beta}}_{KQ,1}} &= \sqrt{\Bigl(\bm{\Sigma}_{\bm{\hat{\beta}}_{KQ}}\Bigr)_{11}}=\sqrt{0.0038}=0.0616\\
+           \sigma_{\bm{\hat{\beta}}_{KQ,2}} &= \sqrt{\Bigl(\bm{\Sigma}_{\bm{\hat{\beta}}_{KQ}}\Bigr)_{22}}=\sqrt{0.0037}=0.0608\\
+           \sigma_{\bm{\hat{\beta}}_{KQ,3}} &= \sqrt{\Bigl(\bm{\Sigma}_{\bm{\hat{\beta}}_{KQ}}\Bigr)_{33}}=\sqrt{0.0023}=0.0480
+           \; .
+           \end{align*}
+           Da die Schätzfehler der KQ-Schätzer, die sich aus
+           $\bm{\hat{\Sigma}}_{\bm{\hat{\beta}}_{KQ}}$ ergeben, bis auf den für
+           $\hat{\beta}_{KQ,1}$, durchweg kleiner sind als die Schätzfehler aus
+           $\bm{\Sigma}_{\bm{\hat{\beta}}_{KQ}}$, liegt der Schluss nahe, dass wir (für die
+           vorliegende Stichprobe) das Risiko der Schätzung von $\beta_1$ bzw. $\beta_i$ für
+           $i=2,3$ überschätzen bzw. unterschätzen. Für Signifikanztests einzelner Regressoren
+           bedeutet dies, dass bei fälschlicher Verwendung der Schätzfehler aus
+           $\bm{\hat{\Sigma}}_{\bm{\hat{\beta}}_{KQ}}$ die
+           Tendenz besteht, die Nullhypothese $\beta_i=0$ für $i=1$ bzw. $i=2,3$ eher nicht
+           abzulehnen bzw. abzulehnen.
+					
+\item[(i)] Ist die Struktur der Kovarianzmatrix der Störgrößen $\bm{\Sigma}$ bekannt, lässt sich
+           für den gegebenen Datensatz der VKQ-Schätzer
+           \[
+           \bm{\hat{\beta}}_{VKQ}=(\bm{X}'\bm{\Sigma}^{-1}\bm{X})^{-1}\bm{X}'\bm{\Sigma}^{-1}\bm{y}=
+           \left(\begin{array}{r}
+           0.8852\\
+           1.2301\\
+           1.2706
+           \end{array}\right)
+           \]
+           und seine Kovarianzmatrix
+           \[
+           \bm{\Sigma}_{\bm{\hat{\beta}}_{VKQ}}=(\bm{X}'\bm{\Sigma}^{-1}\bm{X})^{-1}=
+           \left[\begin{array}{rrr}
+           0.0033 & -0.0020 & -0.0017\\
+           -0.0020 & 0.0030 & 0.0001\\
+           -0.0017 & 0.0001 & 0.0020
+           \end{array}\right]
+           \]
+           berechnen.
+
+           Vergleichen Sie die Präzision von $\bm{\hat{\beta}}_{KQ}$ und $\bm{\hat{\beta}}_{VKQ}$,
+           die sich aus $\bm{\Sigma}_{\bm{\hat{\beta}}_{KQ}}$ und
+           $\bm{\Sigma}_{\bm{\hat{\beta}}_{VKQ}}$ ergeben! Diskutieren Sie, inwiefern diese
+           Vergleiche mit den theoretischen Überlegungen von Aufgabenblatt 5 übereinstimmen!
+
+           \underline{\bf Lösungsvorschlag:} Die Schätzfehler aus der gegebenen Kovarianzmatrix
+           $\bm{\Sigma}_{\bm{\hat{\beta}}_{VKQ}}$ lauten
+           \begin{align*}
+           \sigma_{\hat{\beta}_{VKQ,1}} &= \sqrt{\Bigl(\bm{\Sigma}_{\bm{\hat{\beta}}_{VKQ}}\Bigr)_{11}}=\sqrt{0.0033}=0.0574\\
+           \sigma_{\hat{\beta}_{VKQ,2}} &= \sqrt{\Bigl(\bm{\Sigma}_{\bm{\hat{\beta}}_{VKQ}}\Bigr)_{22}}=\sqrt{0.0030}=0.0548\\
+           \sigma_{\hat{\beta}_{VKQ,3}} &= \sqrt{\Bigl(\bm{\Sigma}_{\bm{\hat{\beta}}_{VKQ}}\Bigr)_{33}}=\sqrt{0.0020}=0.0447
+           \; .
+           \end{align*}
+           Gemessen an der richtigen Kovarianzmatrix $\bm{\Sigma}_{\bm{\hat{\beta}}_{KQ}}$ sind
+           die Schätzfehler von $\bm{\hat{\beta}}_{VKQ}$ für alle Parameter in $\bm{\beta}$
+           kleiner als die Schätzfehler von $\bm{\hat{\beta}}_{KQ}$. Dieses Ergebnis ist in
+           Übereinstimmung mit den theoretischen Überlegungen aus Aufgabenblatt 5, wo gezeigt
+           wurde, dass $\bm{\hat{\beta}}_{VKQ}$ gegenüber $\bm{\hat{\beta}}_{KQ}$ relativ
+           effizient ist.
+					
+\item[(j)] Nun sei $\bm{\Sigma}$ unbekannt, so dass sie zunächst geschätzt werden muss, um
+           $\bm{\hat{\beta}}_{EVKQ}$ operationalisieren zu können.
+
+           Erklären Sie, wie---unter der Annahme von multiplikativer Heteroskedastizität
+           $\sigma^2_n=\exp(\alpha_1+\alpha_2x_{n2}+\alpha_3x_{n3})$---die Elemente von
+           $\bm{\Sigma}$ geschätzt werden können! Das Ergebnis dieser Schätzung sei:
+           \begin{center}
+           \renewcommand{\arraystretch}{1.2}% widens distance between rows
+           \begin{tabular}{l|ccc}
+           & $\alpha_1$ & $\alpha_2$ & $\alpha_3$\\ \hline
+           Schätzer     & -3.3546 & 0.8257 & -0.0840\\
+           Schätzfehler & 0.2753 & 0.2196 & 0.2042\\
+           \end{tabular}
+           \renewcommand{\arraystretch}{0.85}% shortens distance between rows
+           \end{center}
+           Wie lautet unter der Information in obiger Tabelle Ihre Spezifikation von
+           $\hat{\sigma}^2_n$?
+
+           Erklären Sie, wieso $\bm{\hat{\beta}}_{EVKQ}$ konsistent geschätzt werden kann, obwohl
+           $\hat{\alpha}_1$ nicht konsistent geschätzt werden kann!
+
+           \underline{\bf Lösungsvorschlag:} Zunächst logarithmiert man
+           $\sigma^2_n=\exp\bigl(\alpha_1+\alpha_2x_{n2}+\alpha_3x_{n3}\bigr)$:
+           \[
+           \ln\bigl(\sigma^2_n\bigr)=\alpha_1+\alpha_2x_{n2}+\alpha_3x_{n3} \; .
+           \]
+           Eine gangbare Approximation für $\ln\bigl(\sigma^2_n\bigr)$ ist
+           $\ln\bigl(\hat{u}^2_n\bigr)$, welche man in einem ersten Schritt aus der KQ-Schätzung
+           von $y_n=\beta_1+\beta_2x_{n2}+\beta_3x_{n3}+u_n$ gewinnt. Addiert man
+           $\ln\bigl(\hat{u}^2_n\bigr)$ auf beiden Seiten
+           \[
+           \ln\bigl(\hat{u}^2_n\bigr)+\ln\bigl(\sigma^2_n\bigr)=\alpha_1+\alpha_2x_{n2}+\alpha_3x_{n3}
+           +\ln\bigl(\hat{u}^2_n\bigr) \; ,
+           \]
+           folgt eine Regressionsgleichung,
+           \begin{align*}
+           \ln\bigl(\hat{u}^2_n\bigr)
+           &= \alpha_1+\alpha_2x_{n2}+\alpha_3x_{n3}+\ln\bigl(\hat{u}^2_n\bigr)-\ln\bigl(\sigma^2_n\bigr)\\
+           &= \alpha_1+\alpha_2x_{n2}+\alpha_3x_{n3}+\ln\left(\frac{\hat{u}^2_n}{\sigma^2_n}\right)\\
+           &= \alpha_1+\alpha_2x_{n2}+\alpha_3x_{n3}+\epsilon_n \; ,
+           \end{align*}
+           aus der $\alpha_2$ und $\alpha_3$ konsistent geschätzt werden können.\footnote{Wie
+           Judge et al. (1988) anmerken, lässt sich zeigen, dass (auch asymptotisch)
+           $\E{\epsilon_n}\not=0$ gilt, so dass $\alpha_1$ weder unverzerrt noch konsistent
+           geschätzt werden kann.}
+
+           Nach der KQ-Schätzung können mit Hilfe der Schätzfehler $t$-Tests zum Signifikanzniveau 5\%
+           durchgeführt werden, um die Spezifikation von $\sigma^2_n=\exp(\alpha_1+\alpha_2x_{n2}+
+           \alpha_3x_{n3})$ festzulegen.
+           \begin{align*}
+           \vert t_{\hat{\alpha}_1}\vert &= \left|\frac{\hat{\alpha}_1-0}{\hat{\sigma}_{\hat{\alpha}_1}}\right|
+                                            =\left|\frac{-3.3546}{0.2753}\right|=12.19>1,96=t_{krit}\\
+           \vert t_{\hat{\alpha}_2}\vert &= \left|\frac{\hat{\alpha}_2-0}{\hat{\sigma}_{\hat{\alpha}_2}}\right|
+                                            =\left|\frac{0.8257}{0.2196}\right|=3.76>1,96=t_{krit}\\
+           \vert t_{\hat{\alpha}_3}\vert &= \left|\frac{\hat{\alpha}_3-0}{\hat{\sigma}_{\hat{\alpha}_3}}\right|
+                                            =\left|\frac{-0.0840}{0.2042}\right|=0.41<1,96=t_{krit}\\
+           \end{align*}
+           Damit sind lediglich $\hat{\alpha}_1$ und $\hat{\alpha}_2$ signifikant zum Niveau 5\% von 0
+           verschieden, und die bevorzugte parametrische Spezifikation der Varianzgleichung lautet
+           \[
+           \sigma^2_n=\exp(\alpha_1+\alpha_2x_{n2}) \; .
+           \]
+           Allgemein gilt, dass man die volle Spezifikation von $\bm{\Sigma}$ nicht vernünftig schätzen
+           kann, ohne Restriktionen auf $\bm{\Sigma}$ aufzuerlegen, da $\bm{\Sigma}$ bei Heteroskedastizität
+           genau soviele zu schätzende Parameter besitzt wie die Stichprobe Beobachtungen hat. Eine solche
+           Restriktion ist z.B. die Annahme multiplikativer Heteroskedastizität.
+           \begin{align*}
+           \hat{\sigma}^2_n
+           &= \exp\bigl(\hat{\alpha}_1+\hat{\alpha}_2x_{n2}\bigr)
+           =\exp\bigl(\hat{\alpha}_1)\exp(\hat{\alpha}_2x_{n2}\bigr)
+           =\hat{\sigma}^2\exp\bigl(\hat{\alpha}_2x_{n2}\bigr)\\
+           \Longrightarrow \bm{\hat{\Sigma}}
+           &= \left[\begin{array}{cccc}
+              \hat{\sigma}^2_1 & & & 0\\
+              & \hat{\sigma}^2_2 & & \\
+              & & \ddots & \\
+              0 & & & \hat{\sigma}^2_N\\
+              \end{array}\right]\\
+           &= \left[\begin{array}{cccc}
+              \hat{\sigma}^2\exp\bigl(\hat{\alpha}_2x_{12}\bigr) & & & 0\\
+              & \hat{\sigma}^2\exp\bigl(\hat{\alpha}_2x_{22}\bigr) & & \\
+              & & \ddots & \\
+              0 & & & \hat{\sigma}^2\exp\bigl(\hat{\alpha}_2x_{N2}\bigr)\\
+              \end{array}\right]\\
+           &= \hat{\sigma}^2\left[\begin{array}{cccc}
+              \exp\bigl(\hat{\alpha}_2x_{12}\bigr) & & & 0\\
+              & \exp\bigl(\hat{\alpha}_2x_{22}\bigr) & & \\
+              & & \ddots & \\
+              0 & & & \exp\bigl(\hat{\alpha}_2x_{N2}\bigr)\\
+              \end{array}\right]=\hat{\sigma}^2\bm{\hat{\Omega}} \; .
+           \end{align*}
+           Setzt man $\bm{\hat{\Sigma}}$ in
+           \[
+           \bm{\hat{\beta}}_{EVKQ}=\bigl(\bm{X}'\bm{\hat{\Sigma}}^{-1}\bm{X}\bigr)^{-1}\bm{X}'
+           \bm{\hat{\Sigma}}^{-1}\bm{y}
+           \]
+           ein, folgt
+           \begin{align*}
+           \bm{\hat{\beta}}_{EVKQ}
+           &= \bigl(\bm{X}'\hat{\sigma}^{-2}\bm{\hat{\Omega}}^{-1}\bm{X}\bigr)^{-1}
+              \bm{X}'\hat{\sigma}^{-2}\bm{\hat{\Omega}}^{-1}\bm{y}\\
+           &= \hat{\sigma}^2\bigl(\bm{X}'\bm{\hat{\Omega}}^{-1}\bm{X}\bigr)^{-1}
+              \bm{X}'\bm{\hat{\Omega}}^{-1}\bm{y}\hat{\sigma}^{-2}\\
+           &= \bigl(\bm{X}'\bm{\hat{\Omega}}^{-1}\bm{X}\bigr)^{-1}\bm{X}'\bm{\hat{\Omega}}^{-1}\bm{y} \; .
+           \end{align*}
+           Damit ist bewiesen, dass $\bm{\hat{\beta}}_{EVKQ}$ zwar von der Strukturmatrix
+           $\bm{\hat{\Omega}}$ abhängt, aber nicht von $\hat{\sigma}^2=\exp(\hat{\alpha}_1)$.
+           Deshalb spielt die Tatsache, dass $\hat{\alpha}_1$ nicht konsistent geschätzt werden
+           kann keine Rolle für $\bm{\hat{\beta}}_{EVKQ}$.
+					
+\item[(k)] Nach Schätzung der unbekannten Kovarianzmatrix $\bm{\Sigma}$ unter Berücksichtigung
+           Ihrer parametrischen Spezifikation aus Teilaufgabe (i) lässt sich nun für die gegebene
+           Stichprobe der empirische verallgemeinerte KQ-Schätzer
+           \[
+           \bm{\hat{\beta}}_{EVKQ}=(\bm{X}'\bm{\hat{\Sigma}}^{-1}\bm{X})^{-1}\bm{X}'
+           \bm{\hat{\Sigma}}^{-1}\bm{y}=
+           \left(\begin{array}{r}
+           0.8812\\
+           1.2263\\
+           1.2784
+           \end{array}\right)
+           \]
+           und seine Kovarianzmatrix
+           \[
+           \bm{\hat{\Sigma}}_{\bm{\hat{\beta}}_{EVKQ}}=(\bm{X}'\bm{\hat{\Sigma}}^{-1}\bm{X})^{-1}=
+           \left[\begin{array}{rrr}
+           0.0066 & -0.0041 & -0.0034\\
+           -0.0041 & 0.0069 & 0.0001\\
+           -0.0034 & 0.0001 & 0.0041
+           \end{array}\right]
+           \]
+           berechnen.
+
+           Berechnen Sie die Präzision von $\bm{\hat{\beta}}_{EVKQ}$
+           und vergleichen Sie diese mit den Ergebnissen aus Teilaufgabe (h)!
+
+           Diskutieren Sie, inwiefern diese Vergleiche mit den theoretischen Überlegungen aus
+           Aufgabenblatt 5 übereinstimmen!
+
+           \underline{\bf Lösungsvorschlag:} Die Schätzfehler
+           aus der Kovarianzmatrix $\bm{\hat{\Sigma}}_{\bm{\hat{\beta}}_{EVKQ}}$ lauten
+           \begin{align*}
+           \hat{\sigma}_{\hat{\beta}_{EVKQ,1}} &= \sqrt{\bigl(\bm{\hat{\Sigma}}_{\bm{\hat{\beta}}_{EVKQ}}\bigr)_{11}}
+                                                  =\sqrt{0.0066}=0.0812\\
+           \hat{\sigma}_{\hat{\beta}_{EVKQ,2}} &= \sqrt{\bigl(\bm{\hat{\Sigma}}_{\bm{\hat{\beta}}_{EVKQ}}\bigr)_{22}}
+                                                  =\sqrt{0.0069}=0.0831\\
+           \hat{\sigma}_{\hat{\beta}_{EVKQ,3}} &= \sqrt{\bigl(\bm{\hat{\Sigma}}_{\bm{\hat{\beta}}_{EVKQ}}\bigr)_{33}}
+                                                  =\sqrt{0.0041}=0.0640 \; .
+           \end{align*}
+           Damit sind sämtliche Schätzfehler für $\bm{\hat{\beta}}_{EVKQ}$ durchweg größer als
+           jene für $\bm{\hat{\beta}}_{VKQ}$ oder $\bm{\hat{\beta}}_{KQ}$. Während dieses Ergebnis
+           für den Vergleich zwischen $\bm{\hat{\beta}}_{VKQ}$ und $\bm{\hat{\beta}}_{EVKQ}$
+           logisch ist, erscheint die relative Effizienz von $\bm{\hat{\beta}}_{KQ}$ gegenüber
+           $\bm{\hat{\beta}}_{EVKQ}$ kontraintuitiv zu sein, da man---wie Aufgabenblatt 5
+           veranschaulicht---durch die zusätzliche Information über die Kovarianzmatrix
+           $\bm{\Sigma}$ eine (relativ) effiziente Schätzung durch $\bm{\hat{\beta}}_{EVKQ}$
+           erwarten würde. Doch leider gilt das Gauss-Markov Theorem aus Aufgabenblatt 5 nicht für
+           $\bm{\hat{\beta}}_{EVKQ}$. Aufgrund der Nichtlinearität von $\bm{\hat{\beta}}_{EVKQ}$
+           sind lediglich asymptotische Effizienzvergleiche möglich, d.h. über die relative
+           Effizienz von $\bm{\hat{\beta}}_{EVKQ}$ gegenüber $\bm{\hat{\beta}}_{KQ}$ in endlichen
+           Stichproben ist nichts Analytisches bekannt und keine Aussage möglich. Eine mögliche
+           Erklärung, wieso $\bm{\hat{\beta}}_{KQ}$ kleinere Schätzfehler als
+           $\bm{\hat{\beta}}_{EVKQ}$ aufweist, ist der gleiche Grund, der dazu geführt hat, dass
+           $\bm{\hat{\beta}}_{VKQ}$ geringere Schätzfehler besitzt als $\bm{\hat{\beta}}_{EVKQ}$.
+           Da für $\bm{\hat{\beta}}_{EVKQ}$ in der ersten Stufe $\bm{\Sigma}$ geschätzt werden
+           muss, weist der Schätzer $\bm{\hat{\beta}}_{EVKQ}$ eine höhere Unsicherheit auf als
+           Schätzer, die wie $\bm{\hat{\beta}}_{EVKQ}$ und---in diesem unrealistischen
+           Fall---$\bm{\hat{\beta}}_{KQ}$ ohne direkte Schätzung von $\bm{\Sigma}$ auskommen.
+           Insofern ist der Effizienzvergleich zwischen $\bm{\hat{\beta}}_{EVKQ}$ und
+           $\bm{\hat{\beta}}_{KQ}$ nicht ganz fair.\footnote{Effizienzvergleiche für komplizierte
+           Schätzer, deren Eigenschaften in endlichen Stichproben unbekannt sind, können mittels
+           Monte Carlo Simulationen durchgeführt werden.}
+
+
+
+\end{itemize}
+
+
+\end{document}

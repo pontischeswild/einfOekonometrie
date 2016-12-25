@@ -1,0 +1,17 @@
+#!/bin/bash
+
+rm *.bbl
+rm *.blg
+rm *.aux
+rm *.log
+rm *.dvi
+rm *.ps
+rm *.pdf
+
+latex Blatt6
+bibtex Blatt6
+latex Blatt6
+latex Blatt6
+dvips Blatt6
+ps2pdf Blatt6.ps
+evince Blatt6.pdf
